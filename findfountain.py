@@ -9,16 +9,11 @@ Created on Sat Aug  3 02:55:54 2024
 import requests
 import pymongo
 from pymongo import MongoClient
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
-import urllib.parse
 from urllib.parse import quote_plus
 
-import sys
 import time
-import datetime
 
-password = quote_plus('@2ca282vfm')
+password = quote_plus('saGMIP2TsDEVZwP5')
 
 uri = "mongodb+srv://achoyy:" + password + "@hackthe6ix2024.srfuxtl.mongodb.net/?retryWrites=true&w=majority&appName=HackThe6ix2024"
 
@@ -37,6 +32,13 @@ def timestamp():
 def distance(coords1, coords2):
     difference = ((coords1[0]-coords2[0])**2 + (coords1[1]-coords2[1])**2)**(1/2)
     return difference
+
+def add_karma(user_name:str):
+    collection_users = client['mydb']['users']
+    my_user = collection_users.find_one({'name': user_name})
+    my_user['karma'] += 1
+    
+    collection_users.update_one({'name': user_name}, my_user)
 
 
 #app functions
@@ -79,14 +81,7 @@ def create_location(location_name: str, category: str, coords, vote: bool(), use
     collection_locations = client['mydb']['locations']
     collection_locations.insert_one(my_location)
     
-    collection_users = client['mydb']['users']
-    collection_users.find_one({name: user_name})
-    
-    
-    my_user = collection_users.find_one({name: user_name})
-    my_user['karma'] += 1
-    
-    collection_users.update_one({name: user_name}, my_user)
+    add_karma(user_name)
 
 #tags location for given coordinates
 def tag_location(user_name: str, vote: bool(), coords, review: str):
@@ -109,11 +104,8 @@ def tag_location(user_name: str, vote: bool(), coords, review: str):
     my_location['visit'].append(this_visit)
     
     collection_locations.update_one({'coords': coords}, my_location)
-    
-    my_user = collection_users.find_one({name: user_name})
-    my_user['karma'] += 1
-    
-    collection_users.update_one({name: user_name}, my_user)
+        
+    add_karma(user_name)
     
 #fetches location data at given coordinates
 def fetch_location(coords: str):
@@ -138,7 +130,24 @@ def fetch_location(coords: str):
 #calculates nearest location to user
 def nearest_location(user_coords, category):
     
-    #fetch all locations of given category
+    #generates list of locations for given category
+    collection_locations = client['mydb']['locations']
+    location_list = collection_locations.find({'category': category})
+    
+    #initialises first location on list
+    location_min = location_list[0]
+    location_min_coords = #coords
+    distance_min = distance(location_min_coords, user_coords)
+    
+    #iterates through location list to see if there are any closer locations
+    for location in location_list:
+        location coords = #coords
+        if distance(location_coords, user_coords) < distance_min:
+            location_min = location
+            distance_min = distance(location_coords, user_coords)
+        
+    return location_min
+
     
 
 
