@@ -21,11 +21,12 @@ export default function Component() {
         <div className="flex items-center w-full mt-4 space-x-2">
           <Select>
             <SelectTrigger className="w-32">
-              <SelectValue placeholder="Choose 1..." />
+              <SelectValue placeholder="Task" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="option1">Option 1</SelectItem>
-              <SelectItem value="option2">Option 2</SelectItem>
+              <SelectItem value="show">Show</SelectItem>
+              <SelectItem value="tag">Tag</SelectItem>
+              <SelectItem value="nearest">Nearest</SelectItem>
             </SelectContent>
           </Select>
           <Select>
@@ -33,8 +34,8 @@ export default function Component() {
               <SelectValue placeholder="Category..." />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="category1">Category 1</SelectItem>
-              <SelectItem value="category2">Category 2</SelectItem>
+              <SelectItem value="water_fountain">Water Fountain</SelectItem>
+              <SelectItem value="bike_rack">Bike Rack</SelectItem>
             </SelectContent>
           </Select>
           <Input type="text" placeholder="Start typing a location..." className="flex-1" />

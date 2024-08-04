@@ -13,11 +13,18 @@ from urllib.parse import quote_plus
 
 import time
 
+import gmplot
+
 password = quote_plus('saGMIP2TsDEVZwP5')
 
 uri = "mongodb+srv://achoyy:" + password + "@hackthe6ix2024.srfuxtl.mongodb.net/?retryWrites=true&w=majority&appName=HackThe6ix2024"
 
 client = MongoClient(uri)
+
+google_api_key = 'AIzaSyDza-zi_w7Y1nQvUbcPFj84fKtXuXyj_fo'
+
+
+
 
 
 
@@ -58,9 +65,9 @@ def create_profile(user_name:str):
     collection_users.insert_one(my_user)
     
 #creates new location at given coordinates
-def create_location(location_name: str, category: str, coords, vote: bool(), user_name: str, review: str):
-    my_location = {}
+def create_location(location_name: str, category: str, coords: tuple, vote: bool(), user_name: str, review: str):        
     
+    my_location = {}
     my_location['name'] = location_name
     my_location['category'] = category
     my_location['coords'] = coords
@@ -82,6 +89,9 @@ def create_location(location_name: str, category: str, coords, vote: bool(), use
     collection_locations.insert_one(my_location)
     
     add_karma(user_name)
+
+    
+    gmap = gmplot.GoogleMapPlotter(coords[0], coords[1], 13, apikey=apikey)
 
 #tags location for given coordinates
 def tag_location(user_name: str, vote: bool(), coords, review: str):
